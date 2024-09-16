@@ -1,6 +1,6 @@
-import tgwf from 'https://cdn.skypack.dev/@tgwf/co2';
+import tgwf from '@tgwf/co2';
 
-export class CarbonMeter {
+class CarbonMeter {
 
     #listner = undefined;
     #location = 'de';
@@ -166,3 +166,5 @@ class ChacheEntry {
     }
 
 }
+export { CarbonMeter };
+export default CarbonMeter;

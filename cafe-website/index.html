@@ -15,7 +15,7 @@
     <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="css/tailwind.css">
     <link rel="stylesheet" href="css/tooplate-antique-cafe.css">
-
+    <script type="module" src="./js/carbon-meter.js"></script>
     <!--
 
 Tooplate 2126 Antique Cafe
@@ -58,8 +58,12 @@ https://www.tooplate.com/view/2126-antique-cafe
                         If you have any question, please <a rel="nofollow" href="https://www.tooplate.com/contact"
                             target="_parent">send us a message</a>. </p>
                     <br>
-                    <p class="text-white leading-8 text-sm font-semibold" id="carbon-emissions">Carbon emissions:
-                        Session NA (Last request NA)</p>
+                    <p class="text-white leading-8 text-sm font-semibold" id="carbon-emissions">Carbon emissions: Session NA (Last request NA)</p>
+                    <!-- <carbon-meter class="text-white leading-8 text-sm font-semibold" text="Carbon emissions: Session {{session}}g (Last request {{request}}g)">               
+                    </carbon-meter>         -->
+                    <carbon-meter text="Carbon emissions: Session {{session}}g (Last request {{request}}g)">               
+                    </carbon-meter>        
+
                 </div>
                 <div class="text-center">
                     <div class="inline-block">
@@ -229,9 +233,10 @@ https://www.tooplate.com/view/2126-antique-cafe
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/parallax.min.js"></script>
     <script src="js/jquery.singlePageNav.min.js"></script>
-    <script type="module" src="js/carbon.js"></script>
+    <!-- <script src="node_modules/website-carbon-meter/dist/carbon.js"></script> -->
     <script type="module">
-        import { CarbonMeter } from './js/carbon.js';
+        import { CarbonMeter } from "./node_modules/website-carbon-meter/dist/esm/carbon.js"
+        //import { CarbonMeter } from "https://cdn.jsdelivr.net/npm/website-carbon-meter";
 
         let cm = new CarbonMeter('de');
         cm.onMetering(

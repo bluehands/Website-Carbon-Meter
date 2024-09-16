@@ -1,0 +1,33 @@
+{
+  "name": "website-carbon-meter",
+  "version": "1.0.7",
+  "description": "Tracks the carbon emissions of a website as live metrics. Based on CO2.js and the actual grid intensity.",
+  "browser": "./dist/esm/carbon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:esm": "node .esbuild.esm.js",
+    "build": "npm run build:esm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluehands/Website-Carbon-Meter.git"
+  },
+  "keywords": [
+    "sustainability",
+    "carbon",
+    "co2"
+  ],
+  "author": "Implemented with 💙 by bluehands",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bluehands/Website-Carbon-Meter/issues"
+  },
+  "homepage": "https://github.com/bluehands/Website-Carbon-Meter#readme",
+  "devDependencies": {    
+    "esbuild": "^0.14.47",
+    "esbuild-plugin-glob": "^1.1.2"
+  },
+  "dependencies": {
+    "@tgwf/co2": "^0.15.0"
+  }
+}
