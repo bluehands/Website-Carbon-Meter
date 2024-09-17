@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "website-carbon-meter": "^1.0.7"
+    "website-carbon-badge": "../packages/website-carbon-badge",
+    "website-carbon-meter": "../packages/website-carbon-meter"
   }
 }

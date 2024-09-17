@@ -1,0 +1,51 @@
+{
+  "name": "website-carbon-badge",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/website-carbon-badge.umd.cjs",
+  "module": "lib/carbon-badge.js",
+  "exports": {
+    ".": {
+      "require": "./dist/website-carbon-badge.umd.cjs",
+      "import": "./lib/carbon-badge.js"
+    }
+  },
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "customElements": "dist/custom-elements.json",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "watch": "vite build --watch",
+    "analyze": "custom-elements-manifest analyze",
+    "validate": "validate-package-exports --check",
+    "postbuild": "npm run validate && npm run analyze"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bluehands/Website-Carbon-Meter.git"
+  },
+  "keywords": [
+    "badge",
+    "sustainability",
+    "carbon",
+    "co2"
+  ],
+  "author": "Implemented with 💙 by bluehands",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bluehands/Website-Carbon-Meter/issues"
+  },
+  "homepage": "https://github.com/bluehands/Website-Carbon-Meter#readme",
+  "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.10.3",
+    "custom-elements-manifest": "^2.1.0",
+    "validate-package-exports": "^0.6.1",
+    "vite": "^5.4.6"
+  },
+  "dependencies": {
+    "website-carbon-meter": "../website-carbon-meter"
+  }
+}

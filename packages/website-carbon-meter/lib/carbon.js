@@ -1,8 +1,9 @@
 import tgwf from '@tgwf/co2';
 
-class CarbonMeter {
+export default class CarbonMeter {
 
-    #listner = undefined;
+
+    #listner = (totalEmission, estimatedCO2) => {};
     #location = 'de';
     #co2 = undefined;
     #totalEmissionsCacheEntry = new ChacheEntry(window.sessionStorage, "carbonMeter.totalEmission", Number.MAX_SAFE_INTEGER);
@@ -25,6 +26,12 @@ class CarbonMeter {
             this.#startMetering();
         }, 1);
     }
+
+    /**
+     * Registers a listener function to handle metering data.
+     *
+     * @param {function(number, number): void} listnerFunc - The listener function that will be called with the total CO2 emissions and the estimated CO2 emissions for the current metering event.
+     */
     onMetering(listnerFunc) {
         this.#listner = listnerFunc;
 
@@ -166,5 +173,3 @@ class ChacheEntry {
     }
 
 }
-export { CarbonMeter };
-export default CarbonMeter;
