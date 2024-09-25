@@ -9,12 +9,12 @@ export class CarbonBadge extends HTMLElement {
     theme: "light" | "dark";
     link: string;
     label: string;
-    renderTooltip: (total: string, lastRequest: string) => string;
     carbonData: {
         total: string,
         lastRequest: string
     }
     meter: CarbonMeter;
+    tooltip: string;
 
     constructor() {
         super();
@@ -22,18 +22,16 @@ export class CarbonBadge extends HTMLElement {
         this.theme = 'light';
         this.link = 'https://bluehands.de';
         this.label = 'Emissions'
-        this.renderTooltip = (total, lastRequest) => {
-            return `This is the total amount of CO2 emissions produced by this website.`;
-        }
         this.carbonData = {
             total: "0",
             lastRequest: "0"
         }
+        this.tooltip = 'CO2 emissions of this website';
         this.meter = new CarbonMeter();
     }
 
     static get observedAttributes() {
-        return ['theme', 'link', 'label', 'renderTooltip'];
+        return ['theme', 'link', 'label', 'tooltip'];
     }
 
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -50,8 +48,8 @@ export class CarbonBadge extends HTMLElement {
             this.label = newValue;
             this.updateView();
         }
-        if (name === 'renderTooltip') {
-            this.renderTooltip = newValue;
+        if (name === 'tooltip') {
+            this.tooltip = newValue;
             this.updateView();
         }
     }
@@ -139,7 +137,7 @@ export class CarbonBadge extends HTMLElement {
         </style>
         <div class="badge-container ${this.theme}-theme">
             <div class="badge">
-                <div class="key" title="${this.renderTooltip(total, lastRequest)}">
+                <div class="key" title="${this.tooltip}">
                     <a href="${this.link}">${this.label}</a>
                 </div>
                 <div class="value">${total}g</div>
