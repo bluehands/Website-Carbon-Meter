@@ -1,10 +1,21 @@
-import CarbonMeter from "website-carbon-meter";
+import CarbonMeter from 'website-carbon-meter';
 
 /**
  * @tag carbon-badge
  * @tagname carbon-badge
  */
 export class CarbonBadge extends HTMLElement {
+
+    theme: "light" | "dark";
+    link: string;
+    label: string;
+    renderTooltip: (total: string, lastRequest: string) => string;
+    carbonData: {
+        total: string,
+        lastRequest: string
+    }
+    meter: CarbonMeter;
+
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
@@ -15,8 +26,8 @@ export class CarbonBadge extends HTMLElement {
             return `This is the total amount of CO2 emissions produced by this website.`;
         }
         this.carbonData = {
-            total: 0,
-            lastRequest: 0
+            total: "0",
+            lastRequest: "0"
         }
         this.meter = new CarbonMeter();
     }
@@ -25,7 +36,7 @@ export class CarbonBadge extends HTMLElement {
         return ['theme', 'link', 'label', 'renderTooltip'];
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name: string, oldValue: any, newValue: any) {
         console.log(name, oldValue, newValue);
         if (name === 'theme') {
             this.theme = newValue;
@@ -46,7 +57,7 @@ export class CarbonBadge extends HTMLElement {
     }
 
     connectedCallback() {
-        this.meter.onMetering((total, lastRequest) => {
+        this.meter.onMetering((total: number, lastRequest: number) => {
             this.carbonData = {
                 total: total.toFixed(3),
                 lastRequest: lastRequest.toFixed(3)
@@ -58,16 +69,12 @@ export class CarbonBadge extends HTMLElement {
     }
 
     updateView = () => {
-        this.shadowRoot.innerHTML = this.render(this.carbonData.total, this.carbonData.lastRequest);
+        if (this.shadowRoot){
+            this.shadowRoot.innerHTML = this.render(this.carbonData.total, this.carbonData.lastRequest);
+        }
     }
 
-    /**
-     * Renders the HTML content of the component.
-     * @param {number} total - The session carbon data.
-     * @param {number} lastRequest - The request carbon data.
-     * @returns {string} The HTML content.
-     */
-    render = (total, lastRequest) => {
+    render = (total: string, lastRequest: string) => {
         return `
         <style>
             .badge-container {

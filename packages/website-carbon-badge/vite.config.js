@@ -1,24 +1,17 @@
 // vite.config.js
 import { defineConfig } from 'vite';
+import pkg from './package.json' with { type: "json" };
 
 export default defineConfig({
     build: {
         target: 'modules',
         emptyOutDir: true,
-        outDir: 'dist',
+        outDir: 'bundle',
         minify: false,
         sourcemap: true,
         lib: {
-            name: 'website-carbon-badge',
-            entry: 'lib/carbon-badge.js',
+            name: pkg.name,
+            entry: 'lib/carbon-badge.ts',
         },
     },
-    rollupOptions: {
-        external: ['website-carbon-meter'], // Add external dependencies here
-        output: {
-            globals: {
-                "website-carbon-meter": 'WebsiteCarbonMeter'
-            }
-        }
-    }
 });

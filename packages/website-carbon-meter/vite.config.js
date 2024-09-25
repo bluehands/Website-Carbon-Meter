@@ -1,24 +1,17 @@
 // vite.config.js
-import { defineConfig } from 'vite';
+import {defineConfig} from 'vite';
+import pkg from './package.json' with { type: "json" };
 
 export default defineConfig({
     build: {
         target: 'modules',
         emptyOutDir: true,
-        outDir: 'dist',
+        outDir: 'bundle',
         minify: false,
         sourcemap: true,
         lib: {
-            name: 'website-carbon-meter',
+            name: pkg.name,
             entry: 'lib/carbon.js',
         },
     },
-    rollupOptions: {
-        external: ['@tgwf/co2'], // Add external dependencies here
-        output: {
-            globals: {
-                '@tgwf/co2': 'CO2' // Provide a global variable name for the external dependency
-            }
-        }
-    }
 });
