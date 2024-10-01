@@ -1,31 +1,40 @@
-import CarbonMeter from "website-carbon-meter";
+import CarbonMeter from 'website-carbon-meter';
 
 /**
  * @tag carbon-badge
  * @tagname carbon-badge
  */
 export class CarbonBadge extends HTMLElement {
+
+    theme: "light" | "dark";
+    link: string;
+    label: string;
+    carbonData: {
+        total: string,
+        lastRequest: string
+    }
+    meter: CarbonMeter;
+    tooltip: string;
+
     constructor() {
         super();
         this.attachShadow({mode: 'open'});
         this.theme = 'light';
         this.link = 'https://bluehands.de';
         this.label = 'Emissions'
-        this.renderTooltip = (total, lastRequest) => {
-            return `This is the total amount of CO2 emissions produced by this website.`;
-        }
         this.carbonData = {
-            total: 0,
-            lastRequest: 0
+            total: "0",
+            lastRequest: "0"
         }
+        this.tooltip = 'CO2 emissions of this website';
         this.meter = new CarbonMeter();
     }
 
     static get observedAttributes() {
-        return ['theme', 'link', 'label', 'renderTooltip'];
+        return ['theme', 'link', 'label', 'tooltip'];
     }
 
-    attributeChangedCallback(name, oldValue, newValue) {
+    attributeChangedCallback(name: string, oldValue: any, newValue: any) {
         console.log(name, oldValue, newValue);
         if (name === 'theme') {
             this.theme = newValue;
@@ -39,14 +48,14 @@ export class CarbonBadge extends HTMLElement {
             this.label = newValue;
             this.updateView();
         }
-        if (name === 'renderTooltip') {
-            this.renderTooltip = newValue;
+        if (name === 'tooltip') {
+            this.tooltip = newValue;
             this.updateView();
         }
     }
 
     connectedCallback() {
-        this.meter.onMetering((total, lastRequest) => {
+        this.meter.onMetering((total: number, lastRequest: number) => {
             this.carbonData = {
                 total: total.toFixed(3),
                 lastRequest: lastRequest.toFixed(3)
@@ -58,16 +67,12 @@ export class CarbonBadge extends HTMLElement {
     }
 
     updateView = () => {
-        this.shadowRoot.innerHTML = this.render(this.carbonData.total, this.carbonData.lastRequest);
+        if (this.shadowRoot){
+            this.shadowRoot.innerHTML = this.render(this.carbonData.total, this.carbonData.lastRequest);
+        }
     }
 
-    /**
-     * Renders the HTML content of the component.
-     * @param {number} total - The session carbon data.
-     * @param {number} lastRequest - The request carbon data.
-     * @returns {string} The HTML content.
-     */
-    render = (total, lastRequest) => {
+    render = (total: string, lastRequest: string) => {
         return `
         <style>
             .badge-container {
@@ -132,7 +137,7 @@ export class CarbonBadge extends HTMLElement {
         </style>
         <div class="badge-container ${this.theme}-theme">
             <div class="badge">
-                <div class="key" title="${this.renderTooltip(total, lastRequest)}">
+                <div class="key" title="${this.tooltip}">
                     <a href="${this.link}">${this.label}</a>
                 </div>
                 <div class="value">${total}g</div>
