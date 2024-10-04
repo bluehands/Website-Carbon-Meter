@@ -6,6 +6,7 @@ import CarbonMeter from 'website-carbon-meter';
  */
 export class CarbonBadge extends HTMLElement {
 
+    location: "de";
     theme: "light" | "dark";
     link: string;
     label: string;
@@ -18,7 +19,8 @@ export class CarbonBadge extends HTMLElement {
 
     constructor() {
         super();
-        this.attachShadow({mode: 'open'});
+        this.attachShadow({ mode: 'open' });
+        this.location = "de";
         this.theme = 'light';
         this.link = 'https://bluehands.de';
         this.label = 'Emissions'
@@ -26,12 +28,12 @@ export class CarbonBadge extends HTMLElement {
             total: "0",
             lastRequest: "0"
         }
-        this.tooltip = 'CO2 emissions of this website';
-        this.meter = new CarbonMeter();
+        this.tooltip = 'CO2 emissions of this website';   
+        this.meter=new CarbonMeter();       
     }
 
     static get observedAttributes() {
-        return ['theme', 'link', 'label', 'tooltip'];
+        return ['theme', 'link', 'label', 'tooltip', 'location'];
     }
 
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
@@ -55,6 +57,7 @@ export class CarbonBadge extends HTMLElement {
     }
 
     connectedCallback() {
+        this.meter = new CarbonMeter(this.location);        
         this.meter.onMetering((total: number, lastRequest: number) => {
             this.carbonData = {
                 total: total.toFixed(3),
@@ -67,7 +70,7 @@ export class CarbonBadge extends HTMLElement {
     }
 
     updateView = () => {
-        if (this.shadowRoot){
+        if (this.shadowRoot) {
             this.shadowRoot.innerHTML = this.render(this.carbonData.total, this.carbonData.lastRequest);
         }
     }

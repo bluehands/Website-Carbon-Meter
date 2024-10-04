@@ -2,7 +2,6 @@ import tgwf from '@tgwf/co2';
 
 export default class CarbonMeter {
 
-
     #listner = (totalEmission, estimatedCO2) => {};
     #location = 'de';
     #co2 = undefined;
@@ -13,6 +12,7 @@ export default class CarbonMeter {
     constructor(location) {
         if (location) {
             this.#location = location;
+            console.info(`CarbonMeter ctor with ${location}`);
         }
         this.#co2 = new tgwf.co2();
         let tenMinutes = 600000;
@@ -51,6 +51,7 @@ export default class CarbonMeter {
                         let j = entry.toJSON();
                         let bytesSent = j.transferSize;
                         this.#calculateAndReportEmissions(bytesSent, carbonIntensity);
+                        console.debug(`Count ${bytesSent} bytes in background from ${j.name}`);
                     }
                 }
             }, 1);
@@ -102,6 +103,7 @@ export default class CarbonMeter {
         performance.getEntriesByType('resource').map((resource) => {
             const data = resource.toJSON();
             totalTransferSize += data.transferSize;
+            console.debug(`Count ${data.transferSize} bytes in browser from ${data.name}`);
         });
 
         return totalTransferSize;

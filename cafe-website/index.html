@@ -63,7 +63,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                     </website-carbon-meter>         -->
 <!--                    <website-carbon-meter text="Carbon emissions: Session {{session}}g (Last request {{request}}g)">               -->
 <!--                    </website-carbon-meter>        -->
-                    <carbon-badge>
+                    <carbon-badge location="de">
                     </carbon-badge>
                 </div>
                 <div class="text-center">
@@ -236,7 +236,8 @@ https://www.tooplate.com/view/2126-antique-cafe
     <script src="js/jquery.singlePageNav.min.js"></script>
     <!-- <script packages="node_modules/website-website-carbon-meter/dist/carbon.js"></script> -->
     <script type="module">
-        import CarbonMeter from "./node_modules/website-carbon-meter/dist/website-carbon-meter.js"
+        //import CarbonMeter from "https://cdn.jsdelivr.net/npm/website-carbon-meter/bundle/website-carbon-meter.js"
+        import CarbonMeter from "./node_modules/website-carbon-meter/bundle/website-carbon-meter.js"
         //import { CarbonMeter } from "https://cdn.jsdelivr.net/npm/website-carbon-meter";
 
         let cm = new CarbonMeter('de');
