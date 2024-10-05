@@ -4,7 +4,7 @@ import CarbonMeter from 'website-carbon-meter';
  * @tag carbon-badge
  * @tagname carbon-badge
  */
-export class CarbonBadge extends HTMLElement {
+export class CarbonMeterBadge extends HTMLElement {
 
     location: "de";
     theme: "light" | "dark";
@@ -151,4 +151,4 @@ export class CarbonBadge extends HTMLElement {
     }
 }
 
-customElements.define('carbon-badge', CarbonBadge);
+customElements.define('carbon-badge', CarbonMeterBadge);

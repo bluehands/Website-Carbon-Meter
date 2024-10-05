@@ -7,7 +7,7 @@ export default defineConfig({
         target: 'modules',
         emptyOutDir: true,
         outDir: 'bundle',
-        minify: false,
+        minify: true,
         sourcemap: true,
         lib: {
             name: pkg.name,
