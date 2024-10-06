@@ -17,7 +17,8 @@
     <link rel="stylesheet" href="css/tooplate-antique-cafe.css">
     <!-- <script type="module" src="node_modules/website-carbon-meter-badge/bundle/website-carbon-meter-badge.js"></script> -->
     <script type="module"
-        src="https://cdn.jsdelivr.net/npm/website-carbon-meter-badge/bundle/website-carbon-meter-badge.js"></script>
+        src="https://cdn.jsdelivr.net/npm/website-carbon-meter-badge/bundle/website-carbon-meter-badge.js">
+        </script>
     <!--
 
 Tooplate 2126 Antique Cafe
@@ -62,11 +63,8 @@ https://www.tooplate.com/view/2126-antique-cafe
                     <br>
                     <p class="text-white leading-8 text-sm font-semibold" id="carbon-emissions">Carbon emissions:
                         Session NA (Last request NA)</p>
-                    <!-- <website-carbon-meter class="text-white leading-8 text-sm font-semibold" text="Carbon emissions: Session {{session}}g (Last request {{request}}g)">
-                    </website-carbon-meter>         -->
-                    <!--                    <website-carbon-meter text="Carbon emissions: Session {{session}}g (Last request {{request}}g)">               -->
-                    <!--                    </website-carbon-meter>        -->
-                    <carbon-meter-badge location="de">
+                    
+                    <carbon-meter-badge location="de" appearance="compact" xlabel="Emissions">
                     </carbon-meter-badge>
                 </div>
                 <div class="text-center">
@@ -229,7 +227,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                     <span>Copyright 2022 Antique Cafe. All rights reserved.</span>
                     <span class="mt-5 md:mt-0">Design: <a href="https://www.tooplate.com"
                             target="_parent">Tooplate</a></span>
-                    <carbon-meter-badge location="de" style="line-height: 15px;"></carbon-meter-badge>
+                    <!-- <carbon-meter-badge location="de" style="line-height: 15px;"></carbon-meter-badge> -->
                 </div>
             </footer>
         </div>

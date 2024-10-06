@@ -2,7 +2,7 @@ import tgwf from '@tgwf/co2';
 
 export default class CarbonMeter {
 
-    #listner = (totalEmission, estimatedCO2) => {};
+    #listner = (totalEmission, estimatedCO2) => { };
     #location = 'de';
     #co2 = undefined;
     #totalEmissionsCacheEntry = new ChacheEntry(window.sessionStorage, "carbonMeter.totalEmission", Number.MAX_SAFE_INTEGER);
@@ -45,13 +45,12 @@ export default class CarbonMeter {
     async #observerEmissionsFromBackgroundTransfer() {
         let carbonIntensity = await this.#getCarbonIntensity();
         const observer = new PerformanceObserver((list) => {
-            setTimeout(() => {
+            setTimeout(() => {                
                 for (const entry of list.getEntries()) {
-                    if (entry.initiatorType === "fetch" || entry.initiatorType === "xmlhttprequest") {
-                        let j = entry.toJSON();
-                        let bytesSent = j.transferSize;
+                    if (entry.initiatorType === "fetch" || entry.initiatorType === "xmlhttprequest" || entry.initiatorType === "img" || entry.initiatorType === "script" ) {
+                        let bytesSent = entry.transferSize;
                         this.#calculateAndReportEmissions(bytesSent, carbonIntensity);
-                        console.debug(`Count ${bytesSent} bytes in background from ${j.name}`);
+                        console.debug(`${entry.initiatorType}: Count ${bytesSent} bytes in background from ${entry.name}`);
                     }
                 }
             }, 1);
@@ -101,6 +100,11 @@ export default class CarbonMeter {
         let totalTransferSize = 0;
 
         performance.getEntriesByType('resource').map((resource) => {
+            const data = resource.toJSON();
+            totalTransferSize += data.transferSize;
+            console.debug(`Count ${data.transferSize} bytes in browser from ${data.name}`);
+        });
+        performance.getEntriesByType('navigation').map((resource) => {
             const data = resource.toJSON();
             totalTransferSize += data.transferSize;
             console.debug(`Count ${data.transferSize} bytes in browser from ${data.name}`);
