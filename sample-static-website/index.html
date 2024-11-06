@@ -15,7 +15,10 @@
     <!-- <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="css/tailwind.css">
     <link rel="stylesheet" href="css/tooplate-antique-cafe.css">
-    <script type="module" src="./js/carbon-meter.js"></script>
+    <!-- <script type="module" src="node_modules/website-carbon-meter-badge/bundle/website-carbon-meter-badge.js"></script> -->
+    <script type="module"
+        src="https://cdn.jsdelivr.net/npm/website-carbon-meter-badge/bundle/website-carbon-meter-badge.js">
+        </script>
     <!--
 
 Tooplate 2126 Antique Cafe
@@ -58,12 +61,11 @@ https://www.tooplate.com/view/2126-antique-cafe
                         If you have any question, please <a rel="nofollow" href="https://www.tooplate.com/contact"
                             target="_parent">send us a message</a>. </p>
                     <br>
-                    <p class="text-white leading-8 text-sm font-semibold" id="carbon-emissions">Carbon emissions: Session NA (Last request NA)</p>
-                    <!-- <carbon-meter class="text-white leading-8 text-sm font-semibold" text="Carbon emissions: Session {{session}}g (Last request {{request}}g)">               
-                    </carbon-meter>         -->
-                    <carbon-meter text="Carbon emissions: Session {{session}}g (Last request {{request}}g)">               
-                    </carbon-meter>        
-
+                    <p class="text-white leading-8 text-sm font-semibold" id="carbon-emissions">Carbon emissions:
+                        Session NA (Last request NA)</p>
+                    
+                    <carbon-meter-badge location="de" appearance="compact" xlabel="Emissions">
+                    </carbon-meter-badge>
                 </div>
                 <div class="text-center">
                     <div class="inline-block">
@@ -87,7 +89,7 @@ https://www.tooplate.com/view/2126-antique-cafe
             <div class="flex flex-col lg:flex-row justify-around items-center">
                 <div class="flex-1 m-5 rounded-xl px-4 py-6 sm:px-8 sm:py-10 tm-bg-brown tm-item-container">
                     <div class="flex items-start mb-6 tm-menu-item">
-                        <img src="img/menu-item-1.jpg" alt="Image" class="rounded-md">
+                        <img src="img/menu-item-1.jpg" alt="Image" class="rounded-md" loading="lazy">
                         <div class="ml-3 sm:ml-6">
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Hot Cappuccino</h3>
                             <div class="text-white text-md sm:text-lg font-light mb-1">S $8.50</div>
@@ -95,7 +97,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                         </div>
                     </div>
                     <div class="flex items-start mb-6 tm-menu-item">
-                        <img src="img/menu-item-2.jpg" alt="Image" class="rounded-md">
+                        <img src="img/menu-item-2.jpg" alt="Image" class="rounded-md" loading="lazy">
                         <div class="ml-3 sm:ml-6">
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Hot Americano</h3>
                             <div class="text-white text-md sm:text-lg font-light mb-1">S $9.50 . BG #544639</div>
@@ -103,7 +105,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                         </div>
                     </div>
                     <div class="flex items-start mb-6 tm-menu-item">
-                        <img src="img/menu-item-3.jpg" alt="Image" class="rounded-md">
+                        <img src="img/menu-item-3.jpg" alt="Image" class="rounded-md" loading="lazy">
                         <div class="ml-3 sm:ml-6">
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Hot Latte #FC6</h3>
                             <div class="text-white text-md sm:text-lg font-light mb-1">M $11.75</div>
@@ -111,7 +113,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                         </div>
                     </div>
                     <div class="flex items-start mb-6 tm-menu-item">
-                        <img src="img/menu-item-4.jpg" alt="Image" class="rounded-md">
+                        <img src="img/menu-item-4.jpg" alt="Image" class="rounded-md" loading="lazy">
                         <div class="ml-3 sm:ml-6">
                             <h3 class="text-lg sm:text-xl tm-text-yellow mb-1">Hot Espresso</h3>
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Hot Chocolate</h3>
@@ -126,7 +128,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                             <div class="text-white text-md sm:text-lg font-light mb-1">Small $10</div>
                             <div class="text-white text-md sm:text-lg font-light">Large $15</div>
                         </div>
-                        <img src="img/menu-item-5.jpg" alt="Image" class="rounded-md">
+                        <img src="img/menu-item-5.jpg" alt="Image" class="rounded-md" loading="lazy">
                     </div>
                     <div class="flex items-start justify-end mb-6 tm-menu-item-2">
                         <div class="text-right mr-6">
@@ -134,7 +136,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                             <div class="text-white text-md sm:text-lg font-light mb-1">Small $12.50</div>
                             <div class="text-white text-md sm:text-lg font-light">Large $16.50</div>
                         </div>
-                        <img src="img/menu-item-6.jpg" alt="Image" class="rounded-md">
+                        <img src="img/menu-item-6.jpg" alt="Image" class="rounded-md" loading="lazy">
                     </div>
                     <div class="flex items-start justify-end mb-6 tm-menu-item-2">
                         <div class="text-right mr-6">
@@ -142,7 +144,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                             <div class="text-white text-md sm:text-lg font-light mb-1">Small $14</div>
                             <div class="text-white text-md sm:text-lg font-light">Large $18</div>
                         </div>
-                        <img src="img/menu-item-7.jpg" alt="Image" class="rounded-md">
+                        <img src="img/menu-item-7.jpg" alt="Image" class="rounded-md" loading="lazy">
                     </div>
                     <div class="flex items-start justify-end mb-6 tm-menu-item-2">
                         <div class="text-right mr-6">
@@ -150,7 +152,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                             <h3 class="text-lg sm:text-xl mb-2 sm:mb-3 tm-text-yellow">Iced Mocha</h3>
                             <div class="text-white text-md sm:text-lg font-light">Small $10 . Large $15</div>
                         </div>
-                        <img src="img/menu-item-8.jpg" alt="Image" class="rounded-md">
+                        <img src="img/menu-item-8.jpg" alt="Image" class="rounded-md" loading="lazy">
                     </div>
                 </div>
             </div>
@@ -225,6 +227,7 @@ https://www.tooplate.com/view/2126-antique-cafe
                     <span>Copyright 2022 Antique Cafe. All rights reserved.</span>
                     <span class="mt-5 md:mt-0">Design: <a href="https://www.tooplate.com"
                             target="_parent">Tooplate</a></span>
+                    <!-- <carbon-meter-badge location="de" style="line-height: 15px;"></carbon-meter-badge> -->
                 </div>
             </footer>
         </div>
@@ -233,10 +236,11 @@ https://www.tooplate.com/view/2126-antique-cafe
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/parallax.min.js"></script>
     <script src="js/jquery.singlePageNav.min.js"></script>
-    <!-- <script src="node_modules/website-carbon-meter/dist/carbon.js"></script> -->
+    <!-- <script packages="node_modules/website-website-carbon-meter/dist/carbon.js"></script> -->
     <script type="module">
-        import { CarbonMeter } from "./node_modules/website-carbon-meter/dist/esm/carbon.js"
-        //import { CarbonMeter } from "https://cdn.jsdelivr.net/npm/website-carbon-meter";
+        import CarbonMeter from "https://cdn.jsdelivr.net/npm/website-carbon-meter/bundle/website-carbon-meter.js"
+        //import CarbonMeter from "./node_modules/website-carbon-meter/bundle/website-carbon-meter.js"
+
 
         let cm = new CarbonMeter('de');
         cm.onMetering(

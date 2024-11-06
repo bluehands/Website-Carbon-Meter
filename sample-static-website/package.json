@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "website-carbon-meter-badge": "../packages/website-carbon-meter-badge",
+    "website-carbon-meter": "../packages/website-carbon-meter"
+  }
+}

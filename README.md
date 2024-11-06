@@ -16,75 +16,65 @@ To calculate the carbon emissions, the electric energy has to multiplied by the 
 
 ## How to use
 
-The project is in an early stage - no packages are currently provided (coming soon). See the sample project [cafe-website](./cafe-website/).
+There are two major usage scenario:
 
-* copy the carbon.js in your script directory
-* Consume the CarbonMeter (Simple example)
-  * Add an element into your html file to report the carbon
-  ```html
-  <p id="carbon-emissions">Carbon emissions: Session NA (Last request NA)</p>
-  ``` 
-  * Add the following script in your html file
-  ```html
-    <script type="module">
-        import { CarbonMeter } from './js/carbon.js';
+* Use the Badge WebComponent
+* Use the lib directly
 
-        let cm = new CarbonMeter('de');
-        cm.onMetering(
-            (sessionTotalCo2, lastRequestCo2) => {
-                let msg = `Carbon emissions: Session ${sessionTotalCo2.toFixed(2)}g (Last request ${lastRequestCo2.toFixed(2)}g)`;
-                document.getElementById("carbon-emissions").innerText = msg;
-            }
-        );
-        cm.start();
+### Carbon Meter Badge
+
+[![NPM Version](https://img.shields.io/npm/v/website-carbon-meter-badge)](https://www.npmjs.com/package/website-carbon-meter-badge)
+[![](https://data.jsdelivr.com/v1/package/npm/website-carbon-meter-badge/badge)](https://www.jsdelivr.com/package/npm/website-carbon-meter-badge)
+
+Simply use the Carbon Meter Badge WebComponent in your html page. Add a reference to the lib as a script module in the header:
+
+```html
+<script type="module"
+    src="https://cdn.jsdelivr.net/npm/website-carbon-meter-badge/bundle/website-carbon-meter-badge.js">
     </script>
-    ```
-   * Load some data in background (script for onclick)
-   ```javascript
-   function loadData() {
-        setTimeout(() => {
-            fromFetch();
-            fromXHR();
-            fromJQuery();
-        }, 1);
-    }
-    function fromFetch() {
-        let size = Math.floor(Math.random() * 100000);
-        let response = fetch(`https://randomnumberswebapi.azurewebsites.net/api/randomnumbers?length=${size}`)
-        response.then(r => {
-            r.json().then(j => {
-                //console.log(j);
-            })
-        },
-            e => {
-                console.log(e);
-            });
-    }
-    function fromXHR() {
-        let size = Math.floor(Math.random() * 100000);
-        let request = new XMLHttpRequest();
-        request.open("GET", `https://randomnumberswebapi.azurewebsites.net/api/randomnumbers?length=${size}`);
-        request.addEventListener('load', function (event) {
-            if (request.status >= 200 && request.status < 300) {
-                //console.log(request.responseText);
-            } else {
-                console.warn(request.statusText, request.responseText);
-            }
-        });
-        request.send();
-    }
-    function fromJQuery() {
-        let size = Math.floor(Math.random() * 100000);
-        $.ajax({
-            url: `https://randomnumberswebapi.azurewebsites.net/api/randomnumbers?length=${size}`,
-            type: 'GET',
-            dataType: 'json', 
-            success: function (res) {
-                //console.log(res);
-            }
-        });
-    }
-   ```
+```
+
+and put the component in the right place of your website and set the location of your hosting server.
+
+``` html
+<carbon-meter-badge location="de"></carbon-meter-badge>
+```
+
+![badge](./badge.png)
+
+There are a few properties to adjust the component:
+
+* location: *(default: de)* The location of the website. This is used to get the grid carbon intensity. See below for a list of supported regions.
+* theme: *light | dark (default:light)* Set the theme to use.
+* appearance: *compact | inherit (default compact)* Set the badge style - font-size and line-height - to have a more compact badge.
+* link: *(default: github url)* The click on the badge will redirect to a website with further details. You may point to your site. We ask kindly for a citation.
+* label: *(default:* 🌍*)* Change the badge text.
+* tooltip: Set the text which appears on mouse over
+
+### Carbon Meter SDK
+
+[![NPM Version](https://img.shields.io/npm/v/website-carbon-meter)](https://www.npmjs.com/package/website-carbon-meter)
+[![](https://data.jsdelivr.com/v1/package/npm/website-carbon-meter/badge)](https://www.jsdelivr.com/package/npm/website-carbon-meter)
+
+Use the jsDeliver or directly the package from npm to reference the lib.
+
+``` html
+<script type="module">
+    import CarbonMeter from "https://cdn.jsdelivr.net/npm/website-carbon-meter/bundle/website-carbon-meter.js"
+    //import CarbonMeter from "./node_modules/website-carbon-meter/bundle/website-carbon-meter.js"
+
+    let cm = new CarbonMeter('de');
+    cm.onMetering(
+        (sessionTotalCo2, lastRequestCo2) => {
+            let msg = `Carbon emissions: Session ${sessionTotalCo2.toFixed(2)}g (Last request ${lastRequestCo2.toFixed(2)}g)`;
+            document.getElementById("carbon-emissions").innerText = msg;
+        }
+    );
+    cm.start();
+</script>
+```
+
+For more samples see the sample static website.
 
 ## Limitation
 

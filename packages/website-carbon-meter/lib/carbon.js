@@ -1,8 +1,8 @@
 import tgwf from '@tgwf/co2';
 
-class CarbonMeter {
+export default class CarbonMeter {
 
-    #listner = undefined;
+    #listner = (totalEmission, estimatedCO2) => { };
     #location = 'de';
     #co2 = undefined;
     #totalEmissionsCacheEntry = new ChacheEntry(window.sessionStorage, "carbonMeter.totalEmission", Number.MAX_SAFE_INTEGER);
@@ -12,6 +12,7 @@ class CarbonMeter {
     constructor(location) {
         if (location) {
             this.#location = location;
+            console.info(`CarbonMeter ctor with ${location}`);
         }
         this.#co2 = new tgwf.co2();
         let tenMinutes = 600000;
@@ -25,6 +26,12 @@ class CarbonMeter {
             this.#startMetering();
         }, 1);
     }
+
+    /**
+     * Registers a listener function to handle metering data.
+     *
+     * @param {function(number, number): void} listnerFunc - The listener function that will be called with the total CO2 emissions and the estimated CO2 emissions for the current metering event.
+     */
     onMetering(listnerFunc) {
         this.#listner = listnerFunc;
 
@@ -38,12 +45,12 @@ class CarbonMeter {
     async #observerEmissionsFromBackgroundTransfer() {
         let carbonIntensity = await this.#getCarbonIntensity();
         const observer = new PerformanceObserver((list) => {
-            setTimeout(() => {
+            setTimeout(() => {                
                 for (const entry of list.getEntries()) {
-                    if (entry.initiatorType === "fetch" || entry.initiatorType === "xmlhttprequest") {
-                        let j = entry.toJSON();
-                        let bytesSent = j.transferSize;
+                    if (entry.initiatorType === "fetch" || entry.initiatorType === "xmlhttprequest" || entry.initiatorType === "img" || entry.initiatorType === "script" ) {
+                        let bytesSent = entry.transferSize;
                         this.#calculateAndReportEmissions(bytesSent, carbonIntensity);
+                        console.debug(`${entry.initiatorType}: Count ${bytesSent} bytes in background from ${entry.name}`);
                     }
                 }
             }, 1);
@@ -95,6 +102,12 @@ class CarbonMeter {
         performance.getEntriesByType('resource').map((resource) => {
             const data = resource.toJSON();
             totalTransferSize += data.transferSize;
+            console.debug(`Count ${data.transferSize} bytes in browser from ${data.name}`);
+        });
+        performance.getEntriesByType('navigation').map((resource) => {
+            const data = resource.toJSON();
+            totalTransferSize += data.transferSize;
+            console.debug(`Count ${data.transferSize} bytes in browser from ${data.name}`);
         });
 
         return totalTransferSize;
@@ -166,5 +179,3 @@ class ChacheEntry {
     }
 
 }
-export { CarbonMeter };
-export default CarbonMeter;
