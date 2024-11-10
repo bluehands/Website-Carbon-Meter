@@ -1,6 +1,6 @@
 {
   "name": "website-carbon-meter",
-  "version": "1.0.12",
+  "version": "1.0.15",
   "description": "Tracks the carbon emissions of a website as live metrics. Based on CO2.js and the actual grid intensity.",
   "type": "module",
   "main": "bundle/website-carbon-meter.umd.cjs",
