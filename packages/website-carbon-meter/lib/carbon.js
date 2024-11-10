@@ -125,13 +125,13 @@ export default class CarbonMeter {
     }
     async #getCarbonIntensity() {
         let carbonIntensity = parseFloat(this.#carbonIntensityCacheEntry.getItem());
-        if (carbonIntensity === undefined) {
+        if (carbonIntensity === undefined || Number.isNaN(carbonIntensity)) {
             let forecastData = this.#forecastDataCacheEntry.getItem();
             if (forecastData === undefined) {
-                forecastData = this.#getForcastFromServer();
+                forecastData = await this.#getForcastFromServer();
                 this.#forecastDataCacheEntry.setItem(forecastData);
             }
-            carbonIntensity = this.#calculateCarbonIntensityFromForecast(forcast);
+            carbonIntensity = this.#calculateCarbonIntensityFromForecast(forecastData);
             if (carbonIntensity) {
                 this.#carbonIntensityCacheEntry.setItem(carbonIntensity);
             }
