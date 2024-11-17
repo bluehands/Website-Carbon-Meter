@@ -10,6 +10,8 @@ export class CarbonMeterBadge extends HTMLElement {
     theme: "light" | "dark";
     link: string;
     label: string;
+    labelDarkTheme: string;
+    labelLightTheme: string;
     appearance: "compact" | "inherit"
     carbonData: {
         total: string,
@@ -19,6 +21,7 @@ export class CarbonMeterBadge extends HTMLElement {
     tooltip: string;
     numberFormat: Intl.NumberFormat;
 
+
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
@@ -26,14 +29,16 @@ export class CarbonMeterBadge extends HTMLElement {
         this.theme = 'light';
         this.appearance = 'compact'
         this.link = 'https://github.com/bluehands/Website-Carbon-Meter';
-        this.label = '🌍'
+        this.label = ''
+        this.labelDarkTheme = '🌡️🌍'
+        this.labelLightTheme = '👣🌍'
         this.carbonData = {
             total: "0",
             lastRequest: "0"
         }
         this.numberFormat = new Intl.NumberFormat();
         this.numberFormat = new Intl.NumberFormat(this.numberFormat.resolvedOptions().locale, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
-        this.tooltip = 'Total CO2e emissions of this website while surfing (cumulated).';
+        this.tooltip = 'Total CO&#8322;e emissions of this website while surfing (cumulated).';
         this.meter = new CarbonMeter();
     }
 
@@ -85,8 +90,28 @@ export class CarbonMeterBadge extends HTMLElement {
     }
 
     render = (total: string, lastRequest: string) => {
+        let badgeLabel = this.label;
+        if (this.label === '') {
+            badgeLabel = this.theme === 'dark' ? this.labelDarkTheme : this.labelLightTheme;
+        }
         return `
         <style>
+            a:link { 
+                text-decoration: none; 
+                color: inherit;
+            } 
+            a:visited { 
+                text-decoration: none; 
+                color: inherit;
+            } 
+            a:hover { 
+                text-decoration: none; 
+                color: inherit;
+            } 
+            a:active { 
+                text-decoration: none; 
+                color: inherit;
+            }
             .badge-container {
                 display: flex;                
             }
@@ -153,9 +178,9 @@ export class CarbonMeterBadge extends HTMLElement {
         <div class="badge-container ${this.appearance} ${this.theme}-theme">
             <div class="badge">
                 <div class="key" title="${this.tooltip}">
-                    <a href="${this.link}">${this.label}</a>
+                    <a href="${this.link}" target="_blank" rel="noreferrer noopener">${badgeLabel}</a>
                 </div>
-                <div class="value">${total} g</div>
+                <div class="value"><a href="${this.link}" target="_blank" rel="noreferrer noopener">${total} g CO&#8322;</a></div>
             </div>
 
         </div>
