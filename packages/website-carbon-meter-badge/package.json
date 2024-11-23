@@ -1,6 +1,6 @@
 {
   "name": "website-carbon-meter-badge",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "type": "module",
   "module": "dist/carbon-meter-badge.js",
   "types": "dist/carbon-meter-badge.d.ts",
@@ -51,6 +51,6 @@
     "vite": "^5.4.6"
   },
   "dependencies": {
-    "website-carbon-meter": "^1.0.15"
+    "website-carbon-meter": "^1.0.16"
   }
 }

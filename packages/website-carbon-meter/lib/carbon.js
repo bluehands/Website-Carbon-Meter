@@ -5,20 +5,20 @@ export default class CarbonMeter {
     #listner = (totalEmission, estimatedCO2) => { };
     #location = 'de';
     #co2 = undefined;
-    #totalEmissionsCacheEntry = new ChacheEntry(window.sessionStorage, "carbonMeter.totalEmission", Number.MAX_SAFE_INTEGER);
+    #totalEmissionsCacheEntry = new CacheEntry(window.sessionStorage, "carbonMeter.totalEmission", Number.MAX_SAFE_INTEGER);
     #carbonIntensityCacheEntry;
     #forecastDataCacheEntry;
 
     constructor(location) {
         if (location) {
             this.#location = location;
-            console.info(`CarbonMeter ctor with ${location}`);
+            console.info(`CarbonMeter: Choose '${location}' for gathering grid carbon intensity`);
         }
         this.#co2 = new tgwf.co2();
         let tenMinutes = 600000;
         let fourHours = 14400000;
-        this.#carbonIntensityCacheEntry = new ChacheEntry(window.sessionStorage, `carbonMeter.${location}.carbonIntensity`, tenMinutes);
-        this.#forecastDataCacheEntry = new ChacheEntry(window.localStorage, `carbonMeter.${location}.forecastData`, fourHours);
+        this.#carbonIntensityCacheEntry = new CacheEntry(window.sessionStorage, `carbonMeter.${location}.carbonIntensity`, tenMinutes);
+        this.#forecastDataCacheEntry = new CacheEntry(window.localStorage, `carbonMeter.${location}.forecastData`, fourHours);
     }
 
     start() {
@@ -49,7 +49,7 @@ export default class CarbonMeter {
                 for (const entry of list.getEntries()) {
                     if (entry.initiatorType === "fetch" || entry.initiatorType === "xmlhttprequest" || entry.initiatorType === "img" || entry.initiatorType === "script" ) {
                         let bytesSent = entry.transferSize;
-                        this.#calculateAndReportEmissions(bytesSent, carbonIntensity);
+                        this.#calculateAndReportEmissions("From Background",bytesSent, carbonIntensity);
                         console.debug(`${entry.initiatorType}: Count ${bytesSent} bytes in background from ${entry.name}`);
                     }
                 }
@@ -64,9 +64,9 @@ export default class CarbonMeter {
     async #getEmissionsFromBrowserRessources() {
         let carbonIntensity = await this.#getCarbonIntensity();
         let bytesSent = this.#getTransferSize();
-        this.#calculateAndReportEmissions(bytesSent, carbonIntensity);
+        this.#calculateAndReportEmissions("From Browser", bytesSent, carbonIntensity);
     }
-    #calculateAndReportEmissions(bytesTransfered, carbonIntensity) {
+    #calculateAndReportEmissions(context, bytesTransfered, carbonIntensity) {
         let result = this.#co2.perByteTrace(
             bytesTransfered,
             false,
@@ -77,8 +77,9 @@ export default class CarbonMeter {
                     networks: carbonIntensity,
                 }
             }
-        )
+        )        
         let estimatedCO2 = parseFloat(result.co2.toFixed(2));
+        console.debug(`Report: ${context}, Bytes transfered: ${bytesTransfered}, Grid intensity: ${carbonIntensity}, Carbon: ${estimatedCO2}`);
         this.#reportEmissions(estimatedCO2);
     }
     #reportEmissions(estimatedCO2) {
@@ -112,14 +113,17 @@ export default class CarbonMeter {
 
         return totalTransferSize;
     };
-    #calculateCarbonIntensityFromForecast(forecast) {
+    #calculateCarbonIntensityFromForecast(forecastJson) {
+        let forecast = JSON.parse(forecastJson);
         let start = forecast.Start;
         let intervall = forecast.Interval;
         let ratings = forecast.Ratings;
         let now = Date.now();
         let currentIndex = Math.round((now - start) / intervall);
         if (currentIndex >= 0 && currentIndex < ratings.length) {
-            return ratings[currentIndex];
+            let rating = ratings[currentIndex];
+            console.debug(`Current Grid CO2 Intensity: ${rating}`);
+            return rating;
         }
         return null;
     }
@@ -129,7 +133,7 @@ export default class CarbonMeter {
             let forecastData = this.#forecastDataCacheEntry.getItem();
             if (forecastData === undefined) {
                 forecastData = await this.#getForcastFromServer();
-                this.#forecastDataCacheEntry.setItem(forecastData);
+                this.#forecastDataCacheEntry.setItem(JSON.stringify(forecastData));
             }
             carbonIntensity = this.#calculateCarbonIntensityFromForecast(forecastData);
             if (carbonIntensity) {
@@ -151,7 +155,7 @@ export default class CarbonMeter {
     }
 }
 
-class ChacheEntry {
+class CacheEntry {
     #keyName;
     #dueKeyName;
     #due;
