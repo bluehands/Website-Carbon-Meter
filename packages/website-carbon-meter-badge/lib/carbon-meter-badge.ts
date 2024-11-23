@@ -47,7 +47,7 @@ export class CarbonMeterBadge extends HTMLElement {
     }
 
     attributeChangedCallback(name: string, oldValue: any, newValue: any) {
-        console.log(`Change this.${name} from ${oldValue} to ${newValue}`);
+        console.log(`${name}: ${newValue}`);
         if (name === 'theme') {
             this.theme = newValue;
             this.updateView();
