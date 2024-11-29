@@ -176,8 +176,8 @@ export class CarbonMeterBadge extends HTMLElement {
             }
         </style>
         <div class="badge-container ${this.appearance} ${this.theme}-theme">
-            <div class="badge">
-                <div class="key" title="${this.tooltip}">
+            <div class="badge" title="${this.tooltip}">
+                <div class="key" >
                     <a href="${this.link}" target="_blank" rel="noreferrer noopener">${badgeLabel}</a>
                 </div>
                 <div class="value"><a href="${this.link}" target="_blank" rel="noreferrer noopener">${total} g CO&#8322;</a></div>

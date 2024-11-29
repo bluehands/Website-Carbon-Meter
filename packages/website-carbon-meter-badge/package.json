@@ -1,6 +1,6 @@
 {
   "name": "website-carbon-meter-badge",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "type": "module",
   "module": "dist/carbon-meter-badge.js",
   "types": "dist/carbon-meter-badge.d.ts",
