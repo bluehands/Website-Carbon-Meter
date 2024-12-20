@@ -14,7 +14,7 @@ export default class CarbonMeter {
             this.#location = location;
             console.info(`CarbonMeter: Choose '${location}' for gathering grid carbon intensity`);
         }
-        this.#co2 = new tgwf.co2();
+        this.#co2 = new tgwf.co2({ model: "swd", version: 4 });
         let tenMinutes = 600000;
         let fourHours = 14400000;
         this.#carbonIntensityCacheEntry = new CacheEntry(window.sessionStorage, `carbonMeter.${location}.carbonIntensity`, tenMinutes);

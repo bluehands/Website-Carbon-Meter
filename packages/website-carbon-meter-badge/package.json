@@ -51,6 +51,6 @@
     "vite": "^5.4.6"
   },
   "dependencies": {
-    "website-carbon-meter": "^1.0.17"
+    "website-carbon-meter": "^1.0.18"
   }
 }
