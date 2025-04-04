@@ -15,7 +15,8 @@ export class CarbonMeterBadge extends HTMLElement {
     appearance: "compact" | "inherit"
     carbonData: {
         total: string,
-        lastRequest: string
+        lastRequest: string,
+        isLOD: boolean
     }
     meter: CarbonMeter;
     tooltip: string;
@@ -34,7 +35,8 @@ export class CarbonMeterBadge extends HTMLElement {
         this.labelLightTheme = '👣🌍'
         this.carbonData = {
             total: "0",
-            lastRequest: "0"
+            lastRequest: "0",
+            isLOD: false 
         }
         this.numberFormat = new Intl.NumberFormat();
         this.numberFormat = new Intl.NumberFormat(this.numberFormat.resolvedOptions().locale, { maximumFractionDigits: 2, minimumFractionDigits: 2 });
@@ -75,7 +77,8 @@ export class CarbonMeterBadge extends HTMLElement {
         this.meter.onMetering((total: number, lastRequest: number) => {
             this.carbonData = {
                 total: this.numberFormat.format(total),
-                lastRequest: this.numberFormat.format(lastRequest)
+                lastRequest: this.numberFormat.format(lastRequest),
+                isLOD: total<=0.01
             }
             this.updateView();
         })
@@ -85,14 +88,17 @@ export class CarbonMeterBadge extends HTMLElement {
 
     updateView = () => {
         if (this.shadowRoot) {
-            this.shadowRoot.innerHTML = this.render(this.carbonData.total, this.carbonData.lastRequest);
+            this.shadowRoot.innerHTML = this.render(this.carbonData.total, this.carbonData.lastRequest, this.carbonData.isLOD);
         }
     }
 
-    render = (total: string, lastRequest: string) => {
+    render = (total: string, lastRequest: string, isLOD: boolean) => {
         let badgeLabel = this.label;
         if (this.label === '') {
             badgeLabel = this.theme === 'dark' ? this.labelDarkTheme : this.labelLightTheme;
+        }
+        if (isLOD){
+            total= "< " + this.numberFormat.format(0.01)
         }
         return `
         <style>
